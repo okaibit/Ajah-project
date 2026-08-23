@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurevia — Ajah, Lagos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#080E1A;
+    --navy:#0D1830;
+    --navy-panel:#111D38;
+    --navy-card:#15213E;
+    --line: rgba(255,255,255,0.10);
+    --line-soft: rgba(255,255,255,0.06);
+    --blue:#5B8DEF;
+    --blue-soft: rgba(91,141,239,0.16);
+    --white:#F4F6FA;
+    --gray:#A9B3C6;
+    --gray-soft:#7A8499;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy-deep);
+    color:var(--white);
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  a{color:inherit;}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 40px;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:400; letter-spacing:-0.01em;}
+  .eyebrow{
+    font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gray-soft); font-weight:500;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+  }
+  .hero-bg svg{width:100%; height:100%; display:block;}
+  .hero-scrim{
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(8,14,26,0.55) 0%, rgba(8,14,26,0.35) 30%, rgba(8,14,26,0.85) 78%, var(--navy-deep) 100%);
+  }
+
+  nav{
+    position:relative; z-index:5;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:32px 40px; max-width:1240px; margin:0 auto; width:100%;
+  }
+  .brand{display:flex; flex-direction:column; gap:2px;}
+  .brand .name{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:400;
+    font-size:26px; letter-spacing:0.01em; color:var(--white);
+  }
+  .brand .by{
+    font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gray-soft);
+  }
+  .nav-icons{display:flex; gap:12px;}
+  .icon-btn{
+    width:42px; height:42px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    text-decoration:none; color:var(--white); transition:background .2s ease, border-color .2s ease;
+  }
+  .icon-btn:hover, .icon-btn:focus-visible{background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.3);}
+
+  .hero-body{
+    position:relative; z-index:5; flex:1;
+    max-width:1240px; margin:0 auto; width:100%; padding:0 40px;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:start;
+    padding-top:60px;
+  }
+  .hero-left .eyebrow{margin-bottom:22px; display:flex; align-items:center; gap:10px;}
+  .hero-left h1{
+    font-style:italic; font-weight:300;
+    font-size:clamp(44px, 6vw, 78px);
+    line-height:1.02;
+    margin-bottom:26px;
+  }
+  .hero-stat-line{
+    color:var(--blue); font-size:14.5px; font-weight:500; letter-spacing:0.03em;
+    text-transform:uppercase; margin-bottom:24px; line-height:1.6;
+  }
+  .hero-left p.lede{
+    color:var(--gray); font-size:16.5px; max-width:52ch; margin-bottom:26px;
+  }
+  .hero-loc{
+    display:flex; align-items:center; gap:8px; font-size:14px; color:var(--gray);
+    margin-bottom:34px;
+  }
+  .hero-loc svg{flex-shrink:0;}
+  .hero-price{
+    border-left:2px solid var(--blue); padding-left:20px;
+  }
+  .hero-price .amount{
+    font-family:'Fraunces', serif; font-weight:500; font-size:38px; color:var(--white);
+  }
+  .hero-price .cap{
+    font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-soft); margin-top:4px;
+  }
+
+  /* Request panel */
+  .req-panel{
+    background:rgba(17,29,56,0.82);
+    backdrop-filter:blur(14px);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 28px;
+    max-width:420px;
+    margin-left:auto;
+  }
+  .req-head{
+    display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;
+  }
+  .req-head h3{font-family:'Inter',sans-serif; font-weight:600; font-size:17px; letter-spacing:-0.01em;}
+  .req-step{font-size:10.5px; letter-spacing:0.08em; color:var(--gray-soft); text-transform:uppercase; white-space:nowrap; margin-top:2px;}
+  .req-sub{
+    font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--blue);
+    margin-bottom:18px;
+  }
+  .req-question{font-size:14px; color:var(--gray); margin-bottom:14px;}
+  .req-options{display:grid; gap:8px;}
+  .req-option{
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line-soft);
+    border-radius:9px;
+    padding:13px 16px;
+    text-decoration:none; color:var(--white);
+    transition:background .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .req-option:hover, .req-option:focus-visible{
+    background:rgba(91,141,239,0.10); border-color:rgba(91,141,239,0.4); transform:translateX(2px);
+  }
+  .req-option .ro-title{font-size:14.5px; font-weight:500;}
+  .req-option .ro-sub{font-size:12.5px; color:var(--gray-soft); margin-top:3px;}
+  .req-option .ro-arrow{font-size:16px; color:var(--gray-soft); transition:color .2s ease;}
+  .req-option:hover .ro-arrow{color:var(--blue);}
+  .req-option{width:100%; font-family:inherit; cursor:pointer;}
+  .req-option.selected{background:rgba(91,141,239,0.16); border-color:var(--blue);}
+  .req-option-small{padding:14px 18px;}
+
+  .req-step-panel{display:none;}
+  .req-step-panel.active{display:block; animation:reqFade .25s ease;}
+  @keyframes reqFade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  .req-yesno{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px;}
+  .req-yn{
+    padding:16px; border-radius:10px; border:1px solid var(--line-soft);
+    background:rgba(255,255,255,0.03); color:var(--white); font-family:inherit; font-size:14.5px; font-weight:500;
+    cursor:pointer; transition:background .2s ease, border-color .2s ease;
+  }
+  .req-yn:hover, .req-yn:focus-visible{border-color:rgba(91,141,239,0.4);}
+  .req-yn.selected{background:rgba(91,141,239,0.16); border-color:var(--blue);}
+
+  .req-back{display:inline-block; margin-top:6px; font-size:13px; color:var(--gray-soft); text-decoration:none;}
+  .req-back:hover, .req-back:focus-visible{color:var(--blue);}
+
+  .req-field-label{font-size:14px; color:var(--gray); margin-bottom:14px; font-weight:500;}
+  .req-row-2{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;}
+  .req-input-label{display:block; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gray-soft); margin-bottom:5px; margin-top:12px;}
+  .req-input{
+    width:100%; padding:12px 13px; border-radius:8px; border:1px solid var(--line-soft);
+    background:rgba(255,255,255,0.03); color:var(--white); font-family:inherit; font-size:13.5px;
+  }
+  .req-input::placeholder{color:var(--gray-soft);}
+  .req-input:focus{outline:none; border-color:var(--blue);}
+  .req-continue{
+    width:100%; margin-top:24px; padding:15px; border-radius:10px; border:none;
+    background:var(--blue); color:var(--navy-deep); font-family:inherit; font-size:14.5px; font-weight:600;
+    cursor:pointer; transition:background .2s ease;
+  }
+  .req-continue:hover, .req-continue:focus-visible{background:#7DA3F5;}
+  .req-phone-row{display:flex; gap:8px;}
+  .req-phone-code{
+    display:flex; align-items:center; gap:6px; padding:0 12px; border-radius:8px;
+    border:1px solid var(--line-soft); background:rgba(255,255,255,0.03); font-size:14px; color:var(--white);
+    white-space:nowrap; flex-shrink:0;
+  }
+  .req-phone-input{flex:1;}
+
+  /* ===== STRIP ===== */
+  .strip{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--navy);}
+  .strip-inner{
+    max-width:1240px; margin:0 auto; padding:20px 40px;
+    display:flex; gap:44px; flex-wrap:wrap; justify-content:space-between;
+  }
+  .strip-item{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--gray-soft); letter-spacing:0.03em;}
+  .strip-item b{color:var(--white); font-weight:500;}
+
+  section{padding:110px 0;}
+  .sec-head{max-width:640px; margin-bottom:60px;}
+  .sec-head .eyebrow{margin-bottom:16px; color:var(--blue);}
+  .sec-head h2{font-size:clamp(30px,3.6vw,42px); font-style:italic; font-weight:300; line-height:1.12; color:var(--white);}
+  .sec-head p{color:var(--gray); margin-top:18px; font-size:16px; max-width:54ch;}
+
+  /* ===== UNITS ===== */
+  .units{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .unit-card{
+    background:var(--navy-card); border:1px solid var(--line);
+    border-radius:16px; padding:40px 36px; position:relative; overflow:hidden;
+    transition:border-color .25s ease;
+  }
+  .unit-card:hover{border-color:rgba(91,141,239,0.4);}
+  .unit-card.featured{
+    background:linear-gradient(165deg, rgba(91,141,239,0.14), var(--navy-card) 55%);
+    border-color:rgba(91,141,239,0.3);
+  }
+  .unit-tag{
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue);
+    position:absolute; top:32px; right:36px;
+  }
+  .unit-type{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-soft); margin-bottom:12px;}
+  .unit-card h3{font-family:'Fraunces', serif; font-style:italic; font-weight:400; font-size:27px; margin-bottom:24px; max-width:16ch; color:var(--white);}
+  .unit-price{font-family:'Fraunces', serif; font-weight:500; font-size:34px; color:var(--white); margin-bottom:26px;}
+  .unit-price sup{font-size:15px; font-family:'Inter',sans-serif; opacity:0.6; top:-14px;}
+  .spec-list{display:grid; gap:11px; margin-bottom:32px;}
+  .spec-row{display:flex; justify-content:space-between; font-size:13.5px; border-bottom:1px solid var(--line-soft); padding-bottom:11px;}
+  .spec-label{color:var(--gray-soft);}
+  .spec-value{font-family:'IBM Plex Mono', monospace; font-weight:500; color:var(--white);}
+  .unit-cta{
+    display:inline-flex; align-items:center; gap:8px; font-size:13.5px;
+    text-decoration:none; color:var(--blue); border-bottom:1px solid rgba(91,141,239,0.4); padding-bottom:2px;
+  }
+
+  /* ===== AMENITIES ===== */
+  .amenities-wrap{background:var(--navy);}
+  .amen-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .amen-item{background:var(--navy); padding:34px 30px;}
+  .amen-item .num{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--blue); letter-spacing:0.08em; margin-bottom:14px; display:block;}
+  .amen-item h4{font-family:'Fraunces', serif; font-style:italic; font-weight:400; font-size:20px; margin-bottom:8px; color:var(--white);}
+  .amen-item p{font-size:13.5px; color:var(--gray-soft); line-height:1.55;}
+
+  /* ===== LOCATION ===== */
+  .loc-inner{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
+  .loc-list{display:grid; gap:18px; margin-top:28px;}
+  .loc-list li{list-style:none; display:flex; gap:14px; font-size:14.5px; align-items:baseline; color:var(--gray);}
+  .loc-list li::before{content:'—'; color:var(--blue); flex-shrink:0;}
+  .loc-map{background:var(--navy-card); border:1px solid var(--line); border-radius:16px; aspect-ratio:4/3.2; overflow:hidden;}
+  .loc-map svg{width:100%; height:100%;}
+
+  /* ===== CONTACT ===== */
+  .contact{background:var(--navy-deep); border-top:1px solid var(--line);}
+  .contact-inner{text-align:center; max-width:620px; margin:0 auto;}
+  .contact h2{font-size:clamp(30px,4vw,44px); font-style:italic; font-weight:300; margin-bottom:18px; color:var(--white);}
+  .contact p{color:var(--gray); font-size:16px; margin-bottom:36px;}
+  .contact-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--blue); color:var(--navy-deep); text-decoration:none; font-weight:500;
+    padding:15px 28px; font-size:14px; letter-spacing:0.01em; border-radius:8px;
+    display:inline-flex; align-items:center; gap:10px; transition:transform .2s ease, background .2s ease;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible{background:#7DA3F5; transform:translateY(-1px);}
+  .btn-ghost{
+    color:var(--white); text-decoration:none; font-size:14px; border-bottom:1px solid var(--line);
+    padding-bottom:2px; transition:opacity .2s ease;
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible{opacity:0.6;}
+  .placeholder-note{
+    margin-top:28px; font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+    color:#F0B860; background:rgba(240,184,96,0.08); border:1px dashed rgba(240,184,96,0.3);
+    padding:12px 16px; display:inline-block; border-radius:8px;
+  }
+
+  footer{padding:26px; text-align:center; font-size:12.5px; color:var(--gray-soft); font-family:'Inter', sans-serif; border-top:1px solid var(--line); letter-spacing:0.01em;}
+
+  .wa-float{
+    position:fixed; bottom:26px; right:26px; z-index:60;
+    background:var(--blue); color:var(--navy-deep); width:56px; height:56px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    text-decoration:none; box-shadow:0 10px 30px rgba(91,141,239,0.35);
+    transition:transform .2s ease;
+  }
+  .wa-float:hover, .wa-float:focus-visible{transform:scale(1.06);}
+
+  @media (max-width:900px){
+    .hero-body{grid-template-columns:1fr; padding-bottom:48px;}
+    .req-panel{margin-top:8px;}
+    .units{grid-template-columns:1fr;}
+    .amen-grid{grid-template-columns:1fr;}
+    .loc-inner{grid-template-columns:1fr;}
+    section{padding:72px 0;}
+    nav{padding:24px 20px;}
+    .hero-body{padding:0 20px 48px;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1400 1000" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0A1428"/>
+          <stop offset="60%" stop-color="#0D1B33"/>
+          <stop offset="100%" stop-color="#122246"/>
+        </linearGradient>
+        <linearGradient id="facadeA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1B2C4E"/>
+          <stop offset="100%" stop-color="#0F1C36"/>
+        </linearGradient>
+      </defs>
+      <rect width="1400" height="1000" fill="url(#sky)"/>
+      <circle cx="1180" cy="140" r="1.5" fill="#fff" opacity="0.6"/>
+      <circle cx="1260" cy="220" r="1" fill="#fff" opacity="0.4"/>
+      <circle cx="1100" cy="260" r="1.2" fill="#fff" opacity="0.5"/>
+      <circle cx="980" cy="120" r="1" fill="#fff" opacity="0.3"/>
+      <circle cx="1320" cy="180" r="1.3" fill="#fff" opacity="0.5"/>
+      <path d="M -50 1000 L -50 520 L 420 460 L 420 1000 Z" fill="url(#facadeA)"/>
+      <path d="M 420 1000 L 420 300 L 980 220 L 980 1000 Z" fill="url(#facadeA)" opacity="0.95"/>
+      <path d="M 980 1000 L 980 400 L 1450 340 L 1450 1000 Z" fill="url(#facadeA)" opacity="0.85"/>
+      <g fill="#F2C879" opacity="0.85">
+        <rect x="20" y="600" width="26" height="34"/>
+        <rect x="70" y="600" width="26" height="34"/>
+        <rect x="20" y="660" width="26" height="34"/>
+        <rect x="140" y="640" width="26" height="34" opacity="0.3"/>
+        <rect x="190" y="600" width="26" height="34"/>
+        <rect x="240" y="660" width="26" height="34"/>
+        <rect x="290" y="600" width="26" height="34" opacity="0.35"/>
+        <rect x="340" y="640" width="26" height="34"/>
+        <rect x="70" y="720" width="26" height="34" opacity="0.4"/>
+        <rect x="190" y="720" width="26" height="34"/>
+        <rect x="290" y="720" width="26" height="34"/>
+      </g>
+      <g fill="#F2C879" opacity="0.85">
+        <rect x="460" y="360" width="30" height="40"/>
+        <rect x="520" y="360" width="30" height="40" opacity="0.3"/>
+        <rect x="580" y="360" width="30" height="40"/>
+        <rect x="640" y="360" width="30" height="40"/>
+        <rect x="700" y="360" width="30" height="40" opacity="0.4"/>
+        <rect x="760" y="360" width="30" height="40"/>
+        <rect x="820" y="360" width="30" height="40"/>
+        <rect x="880" y="360" width="30" height="40" opacity="0.3"/>
+        <rect x="460" y="440" width="30" height="40" opacity="0.4"/>
+        <rect x="580" y="440" width="30" height="40"/>
+        <rect x="700" y="440" width="30" height="40"/>
+        <rect x="820" y="440" width="30" height="40" opacity="0.4"/>
+        <rect x="460" y="520" width="30" height="40"/>
+        <rect x="580" y="520" width="30" height="40" opacity="0.3"/>
+        <rect x="700" y="520" width="30" height="40"/>
+        <rect x="820" y="520" width="30" height="40"/>
+        <rect x="460" y="600" width="30" height="40" opacity="0.3"/>
+        <rect x="580" y="600" width="30" height="40"/>
+        <rect x="700" y="600" width="30" height="40"/>
+        <rect x="820" y="600" width="30" height="40" opacity="0.35"/>
+      </g>
+      <g fill="#F2C879" opacity="0.7">
+        <rect x="1020" y="460" width="28" height="36"/>
+        <rect x="1080" y="460" width="28" height="36" opacity="0.3"/>
+        <rect x="1140" y="460" width="28" height="36"/>
+        <rect x="1200" y="460" width="28" height="36"/>
+        <rect x="1260" y="460" width="28" height="36" opacity="0.4"/>
+        <rect x="1320" y="460" width="28" height="36"/>
+        <rect x="1020" y="540" width="28" height="36" opacity="0.4"/>
+        <rect x="1140" y="540" width="28" height="36"/>
+        <rect x="1260" y="540" width="28" height="36"/>
+        <rect x="1020" y="620" width="28" height="36"/>
+        <rect x="1140" y="620" width="28" height="36" opacity="0.3"/>
+        <rect x="1260" y="620" width="28" height="36"/>
+      </g>
+      <g fill="#060B15" opacity="0.9">
+        <path d="M 260 1000 L 270 780 Q 320 760 350 800 Q 300 790 275 830 Q 330 810 360 850 Q 300 830 268 860 L 260 1000 Z"/>
+        <path d="M 1000 1000 L 1010 830 Q 1050 815 1075 845 Q 1035 838 1015 865 Q 1055 850 1080 880 Q 1030 865 1008 890 L 1000 1000 Z"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-scrim"></div>
+
+  <nav>
+    <div class="brand">
+      <span class="name">Aurevia</span>
+      <span class="by">By smartrealty.ng</span>
+    </div>
+    <div class="nav-icons">
+      <a class="icon-btn" href="https://wa.me/2348105276537" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.32C8.5 21.5 10.2 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+      <a class="icon-btn" href="https://www.instagram.com/smartrealty.ng?igsi=dXNjNXh5bzN4bmIz" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>
+      </a>
+      <a class="icon-btn" href="tel:+2348105276537" aria-label="Call">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.8c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1L6.6 10.8z" stroke="currentColor" stroke-width="1.3"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <div class="hero-body">
+    <div class="hero-left">
+      <div class="eyebrow">Now selling · Ajah, Lagos</div>
+      <h1>Space to grow.<br>Built to last.</h1>
+      <div class="hero-stat-line">Four-bedroom duplexes · Ajah, Lagos · From ₦150M</div>
+      <p class="lede">A small collection of semi-detached duplexes off the Ajah corridor, for families who want room to grow, a serious title, and an address that makes sense. Live in it, or hold it — on a clean, documented title.</p>
+      <div class="hero-loc">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13A7 7 0 0 0 5 9c0 5.42 7 13 7 13z" stroke="#5B8DEF" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="#5B8DEF" stroke-width="1.6"/></svg>
+        [Add specific street], Ajah, Lagos
+      </div>
+      <div class="hero-price">
+        <div class="amount">From ₦150M</div>
+        <div class="cap">4-Bedroom duplexes · Ajah · Now selling</div>
+      </div>
+    </div>
+
+    <div class="req-panel">
+
+      <!-- STEP 1: choose unit -->
+      <div class="req-step-panel active" data-step="1">
+        <div class="req-head">
+          <h3>Request Full Details</h3>
+          <span class="req-step">Step 1 of 3</span>
+        </div>
+        <div class="req-sub">Aurevia · Now selling · Subject to availability</div>
+        <div class="req-question">Which unit are you looking at?</div>
+        <div class="req-options">
+          <button type="button" class="req-option" data-unit="4 Bed Semi-Detached Duplex" data-price="₦150,000,000">
+            <div>
+              <div class="ro-title">4 Bed Semi-Detached Duplex</div>
+              <div class="ro-sub">₦150,000,000</div>
+            </div>
+            <span class="ro-arrow">→</span>
+          </button>
+          <button type="button" class="req-option" data-unit="4 Bed Semi-Detached + BQ" data-price="₦170,000,000">
+            <div>
+              <div class="ro-title">4 Bed Semi-Detached + BQ</div>
+              <div class="ro-sub">₦170,000,000</div>
+            </div>
+            <span class="ro-arrow">→</span>
+          </button>
+          <button type="button" class="req-option" data-unit="Not sure yet" data-price="Still exploring">
+            <div>
+              <div class="ro-title">Not sure yet</div>
+              <div class="ro-sub">Still exploring</div>
+            </div>
+            <span class="ro-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: budget check -->
+      <div class="req-step-panel" data-step="2">
+        <div class="req-head">
+          <h3>Request Full Details</h3>
+          <span class="req-step">Step 2 of 3</span>
+        </div>
+        <div class="req-sub">Aurevia · Now selling · Subject to availability</div>
+        <div class="req-question">Is this within your budget?</div>
+        <div class="req-yesno">
+          <button type="button" class="req-yn" data-budget="Yes">Yes</button>
+          <button type="button" class="req-yn" data-budget="No">No</button>
+        </div>
+        <a href="#" class="req-back" data-back="1">← Back</a>
+      </div>
+
+      <!-- STEP 3: contact details -->
+      <div class="req-step-panel" data-step="3">
+        <div class="req-head">
+          <h3>Request Full Details</h3>
+          <span class="req-step">Step 3 of 3</span>
+        </div>
+        <div class="req-sub">Aurevia · Now selling · Subject to availability</div>
+        <div class="req-field-label">Your details</div>
+        <div class="req-row-2">
+          <div>
+            <label class="req-input-label" for="f-first">First name</label>
+            <input class="req-input" id="f-first" type="text" placeholder="First name">
+          </div>
+          <div>
+            <label class="req-input-label" for="f-last">Last name</label>
+            <input class="req-input" id="f-last" type="text" placeholder="Last name">
+          </div>
+        </div>
+        <label class="req-input-label" for="f-email">Email</label>
+        <input class="req-input" id="f-email" type="email" placeholder="Email address">
+        <label class="req-input-label" for="f-phone">Phone</label>
+        <div class="req-phone-row">
+          <div class="req-phone-code">🇳🇬 +234</div>
+          <input class="req-input req-phone-input" id="f-phone" type="tel" placeholder="Phone number">
+        </div>
+        <div class="req-input-label" style="margin-top:6px;">Who is this for?</div>
+        <div class="req-options" style="margin-bottom:22px;">
+          <button type="button" class="req-option req-option-small" data-who="Myself / my family">
+            <div class="ro-title">Myself / my family</div>
+          </button>
+          <button type="button" class="req-option req-option-small" data-who="I'm an agent (representing a buyer)">
+            <div class="ro-title">I'm an agent (representing a buyer)</div>
+          </button>
+          <button type="button" class="req-option req-option-small" data-who="My company / investment">
+            <div class="ro-title">My company / investment</div>
+          </button>
+        </div>
+        <button type="button" class="req-continue" id="req-submit">Continue</button>
+        <a href="#" class="req-back" data-back="2">← Back</a>
+      </div>
+
+      <!-- STEP 4: confirmation -->
+      <div class="req-step-panel" data-step="4">
+        <div class="req-head">
+          <h3>You're on the list</h3>
+        </div>
+        <div class="req-question" style="margin-bottom:22px;">Thanks — we've put together your request. Tap below to send it straight to us on WhatsApp so we can follow up immediately.</div>
+        <a class="req-continue" id="req-whatsapp-send" href="#" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:center; text-decoration:none;">Send via WhatsApp →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+<footer>smartrealty.ng · RC 1942184</footer>
+
+<script>
+  // ===== EDIT THIS: your real WhatsApp number, digits only, country code first =====
+  const WHATSAPP_NUMBER = "2348105276537";
+
+  const state = { unit: "", price: "", budget: "", who: "" };
+  const panels = document.querySelectorAll(".req-step-panel");
+
+  function goToStep(n){
+    panels.forEach(p => p.classList.toggle("active", p.dataset.step === String(n)));
+  }
+
+  // Step 1: unit selection
+  document.querySelectorAll('[data-step="1"] .req-option').forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll('[data-step="1"] .req-option').forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      state.unit = btn.dataset.unit;
+      state.price = btn.dataset.price;
+      setTimeout(() => goToStep(2), 200);
+    });
+  });
+
+  // Step 2: budget
+  document.querySelectorAll('[data-step="2"] .req-yn').forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll('[data-step="2"] .req-yn').forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      state.budget = btn.dataset.budget;
+      setTimeout(() => goToStep(3), 200);
+    });
+  });
+
+  // Step 3: who is this for
+  document.querySelectorAll('[data-step="3"] .req-option').forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll('[data-step="3"] .req-option').forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      state.who = btn.dataset.who;
+    });
+  });
+
+  // Back links
+  document.querySelectorAll(".req-back").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      goToStep(link.dataset.back);
+    });
+  });
+
+  // Step 3 -> Step 4 (build the WhatsApp message from everything collected)
+  document.getElementById("req-submit").addEventListener("click", () => {
+    const first = document.getElementById("f-first").value.trim();
+    const last = document.getElementById("f-last").value.trim();
+    const email = document.getElementById("f-email").value.trim();
+    const phone = document.getElementById("f-phone").value.trim();
+
+    let msg = `Hi, I'd like full details on Aurevia, Ajah.\n`;
+    msg += `Unit: ${state.unit || "Not specified"} (${state.price || "-"})\n`;
+    if (state.budget) msg += `Within budget: ${state.budget}\n`;
+    if (first || last) msg += `Name: ${first} ${last}\n`;
+    if (email) msg += `Email: ${email}\n`;
+    if (phone) msg += `Phone: ${phone}\n`;
+    if (state.who) msg += `This is for: ${state.who}\n`;
+
+    document.getElementById("req-whatsapp-send").href =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+
+    goToStep(4);
+  });
+</script>
+
+</body>
+</html>
