@@ -62,9 +62,9 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        // llama-3.3-70b-versatile is a strong, well-rounded free-tier-friendly model on Groq.
+        // openai/gpt-oss-120b is a strong, well-rounded free-tier-friendly model on Groq.
         // Swap to "llama-3.1-8b-instant" if you want faster/cheaper at slightly lower quality.
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
         max_tokens: 500,
         messages: groqMessages
       })
