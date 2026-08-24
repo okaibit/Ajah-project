@@ -8,17 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-deep:#080E1A;
-    --navy:#0D1830;
-    --navy-panel:#111D38;
-    --navy-card:#15213E;
+    --navy-deep:#1A1613;
+    --navy:#241E19;
+    --navy-panel:#2A231D;
+    --navy-card:#302722;
     --line: rgba(255,255,255,0.10);
     --line-soft: rgba(255,255,255,0.06);
-    --blue:#5B8DEF;
-    --blue-soft: rgba(91,141,239,0.16);
-    --white:#F4F6FA;
-    --gray:#A9B3C6;
-    --gray-soft:#7A8499;
+    --blue:#C97A50;
+    --blue-soft: rgba(201,122,80,0.16);
+    --white:#F7F2ED;
+    --gray:#C4B6AC;
+    --gray-soft:#998A80;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -58,7 +58,7 @@
   }
   .hero-scrim{
     position:absolute; inset:0; z-index:1;
-    background:linear-gradient(180deg, rgba(8,14,26,0.72) 0%, rgba(8,14,26,0.55) 35%, rgba(8,14,26,0.88) 78%, var(--navy-deep) 100%);
+    background:linear-gradient(180deg, rgba(26,22,19,0.72) 0%, rgba(26,22,19,0.55) 35%, rgba(26,22,19,0.88) 78%, var(--navy-deep) 100%);
   }
 
   nav{
@@ -119,7 +119,7 @@
 
   /* Request panel */
   .req-panel{
-    background:rgba(17,29,56,0.82);
+    background:rgba(42,35,29,0.82);
     backdrop-filter:blur(14px);
     border:1px solid var(--line);
     border-radius:16px;
@@ -148,14 +148,14 @@
     transition:background .2s ease, border-color .2s ease, transform .2s ease;
   }
   .req-option:hover, .req-option:focus-visible{
-    background:rgba(91,141,239,0.10); border-color:rgba(91,141,239,0.4); transform:translateX(2px);
+    background:rgba(201,122,80,0.10); border-color:rgba(201,122,80,0.4); transform:translateX(2px);
   }
   .req-option .ro-title{font-size:14.5px; font-weight:500;}
   .req-option .ro-sub{font-size:12.5px; color:var(--gray-soft); margin-top:3px;}
   .req-option .ro-arrow{font-size:16px; color:var(--gray-soft); transition:color .2s ease;}
   .req-option:hover .ro-arrow{color:var(--blue);}
   .req-option{width:100%; font-family:inherit; cursor:pointer;}
-  .req-option.selected{background:rgba(91,141,239,0.16); border-color:var(--blue);}
+  .req-option.selected{background:rgba(201,122,80,0.16); border-color:var(--blue);}
   .req-option-small{padding:14px 18px;}
 
   .req-step-panel{display:none;}
@@ -168,8 +168,8 @@
     background:rgba(255,255,255,0.03); color:var(--white); font-family:inherit; font-size:14.5px; font-weight:500;
     cursor:pointer; transition:background .2s ease, border-color .2s ease;
   }
-  .req-yn:hover, .req-yn:focus-visible{border-color:rgba(91,141,239,0.4);}
-  .req-yn.selected{background:rgba(91,141,239,0.16); border-color:var(--blue);}
+  .req-yn:hover, .req-yn:focus-visible{border-color:rgba(201,122,80,0.4);}
+  .req-yn.selected{background:rgba(201,122,80,0.16); border-color:var(--blue);}
 
   .req-back{display:inline-block; margin-top:6px; font-size:13px; color:var(--gray-soft); text-decoration:none;}
   .req-back:hover, .req-back:focus-visible{color:var(--blue);}
@@ -219,10 +219,10 @@
     border-radius:16px; padding:40px 36px; position:relative; overflow:hidden;
     transition:border-color .25s ease;
   }
-  .unit-card:hover{border-color:rgba(91,141,239,0.4);}
+  .unit-card:hover{border-color:rgba(201,122,80,0.4);}
   .unit-card.featured{
-    background:linear-gradient(165deg, rgba(91,141,239,0.14), var(--navy-card) 55%);
-    border-color:rgba(91,141,239,0.3);
+    background:linear-gradient(165deg, rgba(201,122,80,0.14), var(--navy-card) 55%);
+    border-color:rgba(201,122,80,0.3);
   }
   .unit-tag{
     font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue);
@@ -238,7 +238,7 @@
   .spec-value{font-family:'IBM Plex Mono', monospace; font-weight:500; color:var(--white);}
   .unit-cta{
     display:inline-flex; align-items:center; gap:8px; font-size:13.5px;
-    text-decoration:none; color:var(--blue); border-bottom:1px solid rgba(91,141,239,0.4); padding-bottom:2px;
+    text-decoration:none; color:var(--blue); border-bottom:1px solid rgba(201,122,80,0.4); padding-bottom:2px;
   }
 
   /* ===== AMENITIES ===== */
@@ -286,7 +286,7 @@
     position:fixed; bottom:26px; right:26px; z-index:60;
     background:var(--blue); color:var(--navy-deep); width:56px; height:56px;
     border-radius:50%; display:flex; align-items:center; justify-content:center;
-    text-decoration:none; box-shadow:0 10px 30px rgba(91,141,239,0.35);
+    text-decoration:none; box-shadow:0 10px 30px rgba(201,122,80,0.35);
     transition:transform .2s ease;
   }
   .wa-float:hover, .wa-float:focus-visible{transform:scale(1.06);}
@@ -342,7 +342,7 @@
       <div class="hero-stat-line">Four-bedroom duplexes · Ajah, Lagos · From ₦150M</div>
       <p class="lede">A small collection of semi-detached duplexes off the Ajah corridor, for families who want room to grow, a serious title, and an address that makes sense. Live in it, or hold it — on a clean, documented title.</p>
       <div class="hero-loc">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13A7 7 0 0 0 5 9c0 5.42 7 13 7 13z" stroke="#5B8DEF" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="#5B8DEF" stroke-width="1.6"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13A7 7 0 0 0 5 9c0 5.42 7 13 7 13z" stroke="#C97A50" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="#C97A50" stroke-width="1.6"/></svg>
         Ajah, Lagos
       </div>
       <div class="hero-price">
@@ -549,14 +549,14 @@
 <style>
   .ai-chat-bubble {
     position: fixed; bottom: 26px; left: 26px; z-index: 60;
-    background: #5B8DEF; color: #080E1A; width: 56px; height: 56px;
+    background: #C97A50; color: #1A1613; width: 56px; height: 56px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; box-shadow: 0 10px 30px rgba(91,141,239,0.35);
+    cursor: pointer; box-shadow: 0 10px 30px rgba(201,122,80,0.35);
     font-size: 22px; border: none;
   }
   .ai-chat-window {
     position: fixed; bottom: 96px; left: 26px; z-index: 60;
-    width: 340px; max-height: 460px; background: #111D38;
+    width: 340px; max-height: 460px; background: #2A231D;
     border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
     display: none; flex-direction: column; overflow: hidden;
     font-family: 'Inter', sans-serif;
@@ -574,7 +574,7 @@
     max-width: 85%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.45;
   }
   .ai-chat-msg.user {
-    align-self: flex-end; background: #5B8DEF; color: #080E1A;
+    align-self: flex-end; background: #C97A50; color: #1A1613;
   }
   .ai-chat-msg.assistant {
     align-self: flex-start; background: rgba(255,255,255,0.06); color: #F4F6FA;
@@ -587,7 +587,7 @@
     border-radius: 8px; padding: 9px 11px; color: #F4F6FA; font-size: 13px; outline: none;
   }
   .ai-chat-send {
-    background: #5B8DEF; color: #080E1A; border: none; border-radius: 8px;
+    background: #C97A50; color: #1A1613; border: none; border-radius: 8px;
     padding: 0 14px; font-weight: 600; font-size: 13px; cursor: pointer;
   }
 </style>
