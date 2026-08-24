@@ -527,5 +527,134 @@
   });
 </script>
 
+<!--
+  HOW TO USE THIS FILE:
+  This is a chunk of HTML + CSS + JS you'd paste into your real index.html,
+  right before </body>. It creates a small floating chat bubble in the
+  bottom-left corner (bottom-right is already taken by your WhatsApp button).
+
+  Unlike the live demo you just tried, this version calls YOUR OWN backend
+  (/api/chat) instead of Anthropic directly — because this file is meant to
+  run on a real, publicly hosted site, where the API key must stay hidden
+  on a server, never in the browser's code.
+
+  This will only work once:
+  1. You deploy this project to Vercel (not just GitHub Pages — GitHub Pages
+     can't run backend code, Vercel can)
+  2. You add the api/chat.js file alongside this site
+  3. You set your real Anthropic API key as an environment variable called
+     ANTHROPIC_API_KEY in your Vercel project settings
+-->
+
+<style>
+  .ai-chat-bubble {
+    position: fixed; bottom: 26px; left: 26px; z-index: 60;
+    background: #5B8DEF; color: #080E1A; width: 56px; height: 56px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 10px 30px rgba(91,141,239,0.35);
+    font-size: 22px; border: none;
+  }
+  .ai-chat-window {
+    position: fixed; bottom: 96px; left: 26px; z-index: 60;
+    width: 340px; max-height: 460px; background: #111D38;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+    display: none; flex-direction: column; overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  .ai-chat-window.open { display: flex; }
+  .ai-chat-header {
+    padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #F4F6FA; font-weight: 600; font-size: 14px;
+  }
+  .ai-chat-messages {
+    flex: 1; overflow-y: auto; padding: 14px; display: flex;
+    flex-direction: column; gap: 10px; max-height: 320px;
+  }
+  .ai-chat-msg {
+    max-width: 85%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.45;
+  }
+  .ai-chat-msg.user {
+    align-self: flex-end; background: #5B8DEF; color: #080E1A;
+  }
+  .ai-chat-msg.assistant {
+    align-self: flex-start; background: rgba(255,255,255,0.06); color: #F4F6FA;
+  }
+  .ai-chat-input-row {
+    display: flex; gap: 8px; padding: 12px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .ai-chat-input {
+    flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 9px 11px; color: #F4F6FA; font-size: 13px; outline: none;
+  }
+  .ai-chat-send {
+    background: #5B8DEF; color: #080E1A; border: none; border-radius: 8px;
+    padding: 0 14px; font-weight: 600; font-size: 13px; cursor: pointer;
+  }
+</style>
+
+<button class="ai-chat-bubble" id="ai-chat-toggle" aria-label="Chat with Aurevia assistant">💬</button>
+
+<div class="ai-chat-window" id="ai-chat-window">
+  <div class="ai-chat-header">Aurevia Assistant</div>
+  <div class="ai-chat-messages" id="ai-chat-messages">
+    <div class="ai-chat-msg assistant">Hi! Ask me anything about Aurevia — pricing, units, location.</div>
+  </div>
+  <div class="ai-chat-input-row">
+    <input class="ai-chat-input" id="ai-chat-input" type="text" placeholder="Type a message…">
+    <button class="ai-chat-send" id="ai-chat-send">Send</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    const toggleBtn = document.getElementById('ai-chat-toggle');
+    const windowEl = document.getElementById('ai-chat-window');
+    const messagesEl = document.getElementById('ai-chat-messages');
+    const inputEl = document.getElementById('ai-chat-input');
+    const sendBtn = document.getElementById('ai-chat-send');
+
+    let history = [];
+
+    toggleBtn.addEventListener('click', () => windowEl.classList.toggle('open'));
+
+    function addMessage(role, text){
+      const div = document.createElement('div');
+      div.className = 'ai-chat-msg ' + role;
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    async function send(){
+      const text = inputEl.value.trim();
+      if (!text) return;
+      addMessage('user', text);
+      history.push({ role: 'user', content: text });
+      inputEl.value = '';
+      sendBtn.disabled = true;
+
+      try {
+        // This calls YOUR backend, not Anthropic directly.
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history })
+        });
+        const data = await res.json();
+        const reply = data.reply || "Sorry, something went wrong.";
+        addMessage('assistant', reply);
+        history.push({ role: 'assistant', content: reply });
+      } catch (err) {
+        addMessage('assistant', "Couldn't reach the assistant right now.");
+      } finally {
+        sendBtn.disabled = false;
+      }
+    }
+
+    sendBtn.addEventListener('click', send);
+    inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') send(); });
+  })();
+</script>
+
 </body>
 </html>
